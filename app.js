@@ -62,7 +62,7 @@ io.sockets.on('connection',function(socket){
 			
 	 }
 	 
-	 // Note that on refresh, the disconnect is called and thus the 
+	 // Note that on refresh and browser close, the disconnect is called and thus the 
 	 //	the current user socket if available is removed.
 	 socket.on('disconnect',function(data)
 	 {
