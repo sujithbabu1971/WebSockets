@@ -1,11 +1,111 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  		<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+  		<script src="/js/socket.io.js"></script>
+  		
+  		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+  		<!-- Latest compiled and minified JavaScript -->
+		<script>
+  			jQuery(function($){
+  				var socket=io.connect();
+  				var $userNameForm=$('#userNameForm');
+  				var $userNameInput = $('#userNameInput');
+  				var $showAllUsersParagraph=$('#showAllUsersParagraph');
+  				var $showErrorParagraph = $('#showErrorParagraph');
+  				var $showCurrentUserParagraph = $('#showCurrentUserParagraph');
+  				
+  				socket.emit('getUsers', '', function(dataFromServer)
+  				{
+  				});
+  				
+  				
+  				
+  				$userNameForm.submit(function(e)
+  				{
+  					// This line is critical. Without this, the default submit would happen
+  					e.preventDefault();
+  					// Emit the new user event. This will be handled by server by using on
+  					socket.emit('new user', $userNameInput.val(), function(dataFromServer)
+  					{
+	  					if(dataFromServer)
+	  					{
+	  						$showErrorParagraph.hide();
+	  					}
+	  					else
+	  					{
+	  						$showErrorParagraph.show();
+	  						// The following syntax does not work though it may be documented so in net.
+  			  				// $showErrorParagraph.html = myHtml;	  						
+                  			$showErrorParagraph.html("This user name "+$userNameInput.val() +" is already taken. Select a new one, my friend.");
+                  			
+	  					}
+  					});
+  					
+  					
+  					socket.emit('showCurrentUser', '', function(dataFromServer)
+	  				{
+	  				});
+  					
+  					$userNameInput
+  					
+  				});
+  				
+  			  socket.on('updatenames', function(users){
+  			  	var myHtml = '<ul>';
+  			  	for  (var counter=0; counter< users.length;counter++)
+  			  	{
+  			  		
+  			  		myHtml = myHtml+'<li>'+users[counter]+'</li>';
+  			  	}
+  			  	myHtml =  myHtml+'</ul>';
+  			  	$showAllUsersParagraph.show();
+  			  	// The following syntax does not work though it may be documented so in net.
+  			  	// $showAllUsersParagraph.html = myHtml;
+  			  	$showAllUsersParagraph.html(myHtml);
+                  			
+  			  } );
+  			  
+  			  socket.on('updateCurrentUser', function(currentUser){
+  			  	var myHtml = 'Current User is '+currentUser;
+  			  	$showCurrentUserParagraph.show();
+  			  	// The following syntax does not work though it may be documented so in net.
+  			  	// $showCurrentUserParagraph.html = myHtml;
+  			  	$showCurrentUserParagraph.html(myHtml);
+                  			
+  			  } );
+  			  
+  			  
+  			
+  			});
+  		</script>
+	</head>
+	<body>
+
+  		<div class="container">
+  			<p id="userNamesParagraph"> Input Your Chat Name</p>
+  			<form id="userNameForm" > 
+         		<input  type="text" autofocus required placeholder="Your nickname" id="userNameInput"/>
+  				<input class="btn btn-danger" id="kya" type="submit" value="Submit"/>
+  			</form>
+  			<div id="showAllUsersParagraph"> </div>
+  			<br/>
+  			<br/>
+  			
+  			<div id="showErrorParagraph"> </div>
+  			<br/>
+  			<br/>
+  			<div id="showCurrentUserParagraph"> </div>
+  			
+  			
+  		</div>
+  		
+  		
+  		
+  		
+  		
+  	</body>
 </html>
