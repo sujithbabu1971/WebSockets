@@ -9,5 +9,11 @@
     "ejs": "*",
     "express": "3.2.6",
     "socket.io": "^2.0.3"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-cssmin": "^2.2.1",
+    "grunt-contrib-uglify": "^3.0.1",
+    "grunt-contrib-watch": "^1.0.0"
   }
 }
