@@ -13,7 +13,7 @@ chai.use(chaiHttp);
 
 describe('tests', function(){
 	// Read Caveat at https://github.com/chaijs/chai-http to understand why done is needed.
-	it('fails, as expected', function(done) { // <= Pass in done callback
+	it('Passes if the server is running', function(done) { // <= Pass in done callback
 		// Ensure that the server is running
 		  chai.request('http://localhost:4000')
 		  .get('/')

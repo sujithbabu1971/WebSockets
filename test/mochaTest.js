@@ -9,7 +9,7 @@ var should = require('chai').should();
 //describe is the syntax for test suite
 describe('tests', function(){
 	// it is syntaxt for test case.
-	it('some tests', function(){
+	it('some tests that should fail as a!=b', function(){
 		
 		var a='a';
 		// Will pass
