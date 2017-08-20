@@ -11,6 +11,7 @@
     "socket.io": "^2.0.3"
   },
   "devDependencies": {
+    "chai-http": "^3.0.0",
     "grunt": "^1.0.1",
     "grunt-contrib-cssmin": "^2.2.1",
     "grunt-contrib-uglify": "^3.0.1",
